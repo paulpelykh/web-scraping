@@ -13,6 +13,10 @@ async function start() {
   });
   await fs.writeFile('names.txt', names.join('\r\n'));
 
+  await page.click('#clickme');
+  const clickedData = await page.$eval('#data', el => el.textContent);
+  console.log(clickedData);
+
   const photos = await page.$$eval('img', imgs => {
     return imgs.map(img => img.src);
   });
