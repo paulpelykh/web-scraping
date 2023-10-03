@@ -21,6 +21,14 @@ async function start() {
     return imgs.map(img => img.src);
   });
 
+  await page.type('#ourfield', 'blue');
+
+  await Promise.all([page.click('#ourform button'), page.waitForNavigation()]);
+
+  const info = await page.$eval('#message', el => el.textContent);
+
+  console.log(info);
+
   for (const photo of photos) {
     const imagePage = await page.goto(photo);
     await fs.writeFile(photo.split('/').pop(), await imagePage.buffer());
